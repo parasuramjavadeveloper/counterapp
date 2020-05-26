@@ -16,6 +16,7 @@ import java.util.List;
  *
  */
 @RestController
+@RequestMapping("/api/counter")
 public class CounterController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CounterController.class);
@@ -23,7 +24,7 @@ public class CounterController {
     @Autowired
     private CounterService counterService;
 
-    @PostMapping("/counter")
+    @PostMapping("/create")
     public ResponseEntity<Counter> createCounter(@RequestBody Counter counter) {
         LOGGER.debug("Counter creation request : {}", counter);
         final Counter created = counterService.createCounter(counter);
@@ -31,14 +32,14 @@ public class CounterController {
         return new ResponseEntity<>(created, HttpStatus.OK);
     }
 
-    @GetMapping("/counters")
+    @GetMapping("/get")
     public ResponseEntity<List<Counter>> getCounters() {
         List<Counter> counters = counterService.getAllCounter();
         LOGGER.debug("Counters found : {}", counters);
         return new ResponseEntity<>(counters, HttpStatus.OK);
     }
 
-    @GetMapping("/counter/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Counter> getCounter(@PathVariable Integer id) {
         LOGGER.debug("Counter get with id {}");
         Counter counter = counterService.getCounter(id);
